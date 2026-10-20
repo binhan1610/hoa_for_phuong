@@ -1620,8 +1620,27 @@ body {
     linear-gradient(90deg, #aa5f9a 0%, #d28bbd 28%, #f2d5ee 52%, #cf82b5 73%, #99518c 100%);
 }
 
+.garden__tulip--pink {
+  --bloom-dark: #bb426e;
+  --bloom-main: #ed7fa1;
+  --bloom-light: #ffd0df;
+}
+
+.garden__tulip--peach {
+  --bloom-dark: #bd6859;
+  --bloom-main: #efa58d;
+  --bloom-light: #ffe4ce;
+}
+
+.garden__tulip--lilac {
+  --bloom-dark: #995187;
+  --bloom-main: #ce83b2;
+  --bloom-light: #f4d8ee;
+}
+
 .garden__tulip {
   scale: 1 0;
+  z-index: var(--layer, 1);
   animation:
     garden-sway 4.5s ease-in-out var(--delay) infinite,
     tulip-stem-grow 2.7s cubic-bezier(0.2, 0.7, 0.25, 1) var(--grow-delay) both;
