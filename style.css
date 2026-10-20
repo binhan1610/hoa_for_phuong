@@ -1863,3 +1863,30 @@ body {
     animation: none !important;
   }
 }
+
+@media (max-width: 600px) {
+  .garden__tulip {
+    animation: tulip-stem-grow 2.2s cubic-bezier(0.2, 0.7, 0.25, 1) var(--grow-delay) both;
+  }
+
+  .garden__bloom {
+    animation: tulip-head-open 0.95s cubic-bezier(0.2, 0.78, 0.25, 1.12) var(--bloom-delay) both;
+  }
+
+  .greeting__card {
+    animation-delay: 3.7s;
+  }
+
+  .greeting::before,
+  .greeting::after {
+    animation-delay: 4.6s;
+  }
+
+  .greeting__eyebrow { animation-delay: 4s; }
+  .happy-woman-day { animation-delay: 4.15s; }
+  .greeting__occasion { animation-delay: 4.3s; }
+  .greeting__message { animation-delay: 4.45s; }
+  .greeting__heart {
+    animation-delay: 4.6s, 5.4s;
+  }
+}

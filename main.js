@@ -1,8 +1,14 @@
-window.onload = () => {
+const initializeGarden = () => {
   const garden = document.querySelector(".garden");
+  if (!garden) {
+    throw new Error("The flower garden container is missing.");
+  }
+
   const flowerCountPerLayer = 24;
   const layerCount = 3;
   const colors = ["pink", "peach", "lilac"];
+  const isMobile = window.matchMedia("(max-width: 600px)").matches;
+  const flowers = document.createDocumentFragment();
 
   for (let layer = 0; layer < layerCount; layer += 1) {
     for (let index = 0; index < flowerCountPerLayer; index += 1) {
@@ -13,8 +19,12 @@ window.onload = () => {
       const bloomWidth = 32 + ((index * 5 + layer * 3) % 15);
       const bloomHeight = 38 + ((index * 7 + layer * 4) % 17);
       const x = 1.5 + index * 4.05 + layer * 1.1;
-      const growDelay = 0.9 + index * 0.07 + layer * 0.18;
-      const bloomDelay = 2.2 + index * 0.11 + layer * 0.5;
+      const growDelay = isMobile
+        ? 0.35 + index * 0.035 + layer * 0.12
+        : 0.9 + index * 0.07 + layer * 0.18;
+      const bloomDelay = isMobile
+        ? 1.1 + index * 0.05 + layer * 0.15
+        : 2.2 + index * 0.11 + layer * 0.5;
 
       position.className = `garden__tulip garden__tulip--${color}`;
       position.style.setProperty("--x", `${x}%`);
@@ -33,11 +43,16 @@ window.onload = () => {
         bloom.append(petal);
       });
       position.append(bloom);
-      garden.append(position);
+      flowers.append(position);
     }
   }
 
-  setTimeout(() => {
-    document.body.classList.remove("not-loaded");
-  }, 1000);
+  garden.append(flowers);
+  document.body.classList.remove("not-loaded");
 };
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initializeGarden, { once: true });
+} else {
+  initializeGarden();
+}
