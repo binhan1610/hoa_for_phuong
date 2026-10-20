@@ -4,10 +4,10 @@ const initializeGarden = () => {
     throw new Error("The flower garden container is missing.");
   }
 
-  const flowerCountPerLayer = 24;
+  const isMobile = window.matchMedia("(max-width: 600px)").matches;
+  const flowerCountPerLayer = isMobile ? 16 : 24;
   const layerCount = 3;
   const colors = ["pink", "peach", "lilac"];
-  const isMobile = window.matchMedia("(max-width: 600px)").matches;
   const flowers = document.createDocumentFragment();
 
   for (let layer = 0; layer < layerCount; layer += 1) {
@@ -18,7 +18,10 @@ const initializeGarden = () => {
       const height = 34 + ((index * 7 + layer * 5) % 23) - layer * 8;
       const bloomWidth = 32 + ((index * 5 + layer * 3) % 15);
       const bloomHeight = 38 + ((index * 7 + layer * 4) % 17);
-      const x = 1.5 + index * 4.05 + layer * 1.1;
+      const x =
+        2.8 +
+        (index * 96) / (flowerCountPerLayer - 1) +
+        (layer - 1) * (isMobile ? 1.5 : 1.4);
       const growDelay = isMobile
         ? 0.35 + index * 0.035 + layer * 0.12
         : 0.9 + index * 0.07 + layer * 0.18;
@@ -35,6 +38,17 @@ const initializeGarden = () => {
       position.style.setProperty("--bloom-delay", `${bloomDelay}s`);
       position.style.setProperty("--delay", `${-growDelay}s`);
       position.style.setProperty("--layer", `${layer}`);
+
+      const leaf = document.createElement("span");
+      const leafSide = (index + layer) % 2 === 0 ? "left" : "right";
+      const leafY = 44 + ((index * 7 + layer * 5) % 39);
+      const leafWidth = (isMobile ? 26 : 42) + ((index * 5 + layer * 3) % 19);
+
+      leaf.className = `garden__leaf garden__leaf--${leafSide}`;
+      leaf.style.setProperty("--leaf-y", `${leafY}%`);
+      leaf.style.setProperty("--leaf-width", `${leafWidth}px`);
+      leaf.style.setProperty("--leaf-delay", `${growDelay}s`);
+      position.append(leaf);
 
       bloom.className = "garden__bloom";
       ["left", "center", "right"].forEach((side) => {

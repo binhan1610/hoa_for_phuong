@@ -1646,6 +1646,53 @@ body {
     tulip-stem-grow 2.7s cubic-bezier(0.2, 0.7, 0.25, 1) var(--grow-delay) both;
 }
 
+.garden__tulip::after {
+  display: none;
+}
+
+.garden__leaf {
+  position: absolute;
+  z-index: 2;
+  top: var(--leaf-y);
+  left: 50%;
+  width: var(--leaf-width);
+  height: clamp(13px, 2.5vh, 21px);
+  border-radius: 100% 0 100% 0;
+  opacity: 0.94;
+  background:
+    linear-gradient(170deg, transparent 0 48%, rgba(220, 241, 203, 0.74) 49.5%, transparent 51%),
+    linear-gradient(135deg, #a8c987 0%, #699c67 38%, #39794f 100%);
+  filter: drop-shadow(1px 3px 3px rgba(46, 98, 58, 0.18));
+  transform-origin: 0 50%;
+  animation: leaf-unfurl 0.85s cubic-bezier(0.2, 0.8, 0.25, 1) var(--leaf-delay) both;
+}
+
+.garden__leaf--left {
+  left: calc(50% - var(--leaf-width));
+  clip-path: polygon(0 50%, 15% 20%, 46% 4%, 100% 50%, 47% 96%, 15% 80%);
+  transform: rotate(15deg);
+}
+
+.garden__leaf--right {
+  clip-path: polygon(100% 50%, 85% 20%, 54% 4%, 0 50%, 53% 96%, 85% 80%);
+  transform: rotate(-15deg);
+  background:
+    linear-gradient(170deg, transparent 0 48%, rgba(220, 241, 203, 0.64) 49.5%, transparent 51%),
+    linear-gradient(135deg, #8fb877 0%, #5b925e 38%, #34724b 100%);
+}
+
+.garden__tulip--peach .garden__leaf {
+  background:
+    linear-gradient(165deg, transparent 0 47%, rgba(227, 241, 200, 0.66) 49%, transparent 51%),
+    linear-gradient(135deg, #abc887 0%, #719d64 38%, #457a50 100%);
+}
+
+.garden__tulip--lilac .garden__leaf {
+  background:
+    linear-gradient(165deg, transparent 0 47%, rgba(220, 241, 203, 0.65) 49%, transparent 51%),
+    linear-gradient(135deg, #9cbd83 0%, #648e65 38%, #3c724e 100%);
+}
+
 .garden__tulip::before {
   animation:
     tulip-open 1.45s cubic-bezier(0.2, 0.85, 0.25, 1.2) var(--bloom-delay) backwards,
@@ -1686,6 +1733,17 @@ body {
 @keyframes tulip-stem-grow {
   from { scale: 1 0; }
   to { scale: 1 1; }
+}
+
+@keyframes leaf-unfurl {
+  from {
+    opacity: 0;
+    scale: 0.12 0.28;
+  }
+  to {
+    opacity: 0.94;
+    scale: 1;
+  }
 }
 
 @keyframes tulip-open {
@@ -1744,6 +1802,7 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .garden__tulip,
   .garden__tulip::before,
+  .garden__leaf,
   .garden::after,
   .petal-rain__petal,
   .greeting__card,
